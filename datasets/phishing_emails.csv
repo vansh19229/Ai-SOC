@@ -1,0 +1,51 @@
+id,subject,sender,body,is_phishing,indicators
+1,Urgent: Verify Your Account Now,security@paypa1.com,"Dear Customer, Your account has been suspended. Click here immediately to verify: http://paypa1-secure.xyz/verify or your account will be deleted within 24 hours.",1,urgency|spoofed_domain|suspicious_link
+2,Your invoice is ready,billing@company.com,"Hi John, Please find your monthly invoice attached. Total due: $245.00. Payment due by end of month. Thank you.",0,none
+3,You have won $1000000,winner@lottery-claim.com,"Congratulations! You have been selected as our lucky winner. Send your bank details to claim your prize: http://claim-prize.ru/get",1,prize_scam|suspicious_link|credential_request
+4,Meeting tomorrow at 3pm,manager@yourcompany.com,"Hi team, Just a reminder about our weekly sync tomorrow at 3pm. Please prepare your updates. Thanks.",0,none
+5,FINAL NOTICE: Account Suspension,support@amaz0n-help.net,"Your Amazon account will be permanently closed. Verify now: http://amaz0n-verify.net/login",1,spoofed_domain|urgency|suspicious_link
+6,Project deadline reminder,colleague@work.com,"Hey, wanted to remind you the project deadline is Friday. Let me know if you need help.",0,none
+7,Reset your password immediately,noreply@micros0ft-secure.com,"Microsoft Security Alert: Unusual sign-in activity detected. Reset password: http://ms-reset.xyz/password",1,spoofed_domain|urgency|suspicious_link|credential_request
+8,Lunch plans?,friend@gmail.com,"Are you free for lunch on Thursday? There's a new Thai place downtown I've been wanting to try.",0,none
+9,Your package delivery failed,fedex-delivery@parcels-update.com,"We tried to deliver your package but you were not home. Pay $2.99 redelivery fee: http://fedex-redeliver.info/pay",1,shipping_scam|suspicious_link|payment_request
+10,Quarterly report Q3,analytics@business.com,"Please find attached the Q3 2024 quarterly report. Revenue is up 12% from last quarter.",0,none
+11,Action Required: Unusual Login,security@g00gle-alerts.com,"Someone tried to access your Gmail. Secure account now: http://google-sec.xyz/verify?token=abc123",1,spoofed_domain|urgency|suspicious_link
+12,Team outing next Friday,hr@company.com,"Hi everyone! We're planning a team outing next Friday. Please fill in the doodle poll to confirm attendance.",0,none
+13,Your bank account is compromised,alerts@bankofamerica-secure.net,"Unauthorized transaction detected on your account. Freeze account now: http://boa-freeze.net/secure",1,spoofed_domain|urgency|financial_scam|suspicious_link
+14,Conference call notes,assistant@enterprise.com,"Hi, attaching the notes from today's conference call. Key action items highlighted in yellow.",0,none
+15,Free iPhone 15 - Claim Now,promo@apple-giveaway.xyz,"You've been selected for our iPhone 15 giveaway! Enter your details to claim: http://apple-free.xyz/claim",1,prize_scam|spoofed_domain|suspicious_link|credential_request
+16,Updated privacy policy,legal@legitimateservice.com,"We've updated our privacy policy effective January 1, 2025. Please review the changes at our website.",0,none
+17,URGENT: Wire Transfer Required,ceo@company-executive.net,"Hi, I need you to process an urgent wire transfer of $50,000 to our new vendor. Do this immediately and confidentially.",1,urgency|executive_impersonation|financial_request
+18,New feature announcement,product@saas-company.com,"We're excited to announce our new dashboard feature! Check it out in your account settings.",0,none
+19,Tax refund notification,irs-refund@irs-gov.net,"You are eligible for a tax refund of $3,200. Provide banking details to receive funds: http://irs-refund.xyz/claim",1,government_impersonation|financial_scam|suspicious_link|credential_request
+20,Happy Birthday!,friend@email.com,"Happy birthday! Hope you have a wonderful day. Let's celebrate this weekend!",0,none
+21,Your subscription expired,netflix-billing@streaming-renew.com,"Your Netflix subscription has expired. Re-activate now to avoid losing access: http://netflix-rebill.xyz/renew",1,spoofed_domain|urgency|suspicious_link|payment_request
+22,Code review request,developer@company.com,"Hey, can you review my pull request when you get a chance? It's for the authentication module.",0,none
+23,Security breach detected,security-team@paypal-alert.net,"Your PayPal account was accessed from Russia. Secure it now: http://paypal-secure-login.xyz",1,spoofed_domain|urgency|suspicious_link
+24,Invitation to connect,colleague@linkedin.com,"Hi, I'd like to add you to my professional network on LinkedIn.",0,none
+25,Claim your cryptocurrency,support@coinbase-rewards.xyz,"You have unclaimed Bitcoin worth $5,000 in your account. Verify identity: http://coinbase-verify.xyz/claim",1,crypto_scam|suspicious_link|credential_request
+26,Doctor appointment reminder,clinic@medicalcenter.com,"Reminder: Your appointment with Dr. Smith is tomorrow at 2:30 PM. Reply to confirm.",0,none
+27,Exclusive offer for you,deals@shop-discount99.xyz,"ONLY TODAY: 90% off on all items! Shop now: http://shop-discount99.xyz/sale - Offer expires in 1 hour!",1,urgency|suspicious_domain|too_good_to_be_true
+28,Project status update,pm@company.com,"The sprint is on track. We've completed 8 of 12 story points. Will provide full update in standup.",0,none
+29,Your account has been hacked,support@facebook-security.net,"Your Facebook was compromised. Regain access: http://fb-account-recovery.xyz/restore",1,spoofed_domain|urgency|suspicious_link
+30,Book club meeting,bookclub@community.org,"Hi all, next book club meeting is next Tuesday at 7pm. We'll be discussing chapters 10-15.",0,none
+31,Government stimulus payment,payments@stimulus-gov.net,"You qualify for a $1,400 stimulus payment. Claim here: http://stimulus-payment.xyz/apply",1,government_impersonation|financial_scam|suspicious_link
+32,System maintenance notification,it@yourcompany.com,"Scheduled maintenance this Sunday from 2-4 AM. Some services may be unavailable during this time.",0,none
+33,Your email account full,admin@email-storage-warning.com,"Your mailbox is 99% full. Upgrade storage now or lose emails: http://email-upgrade.xyz/pay",1,urgency|suspicious_link|payment_request
+34,Recipe sharing,mom@family.com,"Found this amazing pasta recipe! Sending it over. Let me know what you think when you try it.",0,none
+35,Verify your identity for KYC,compliance@bank-kyc-update.net,"Mandatory KYC update required. Submit documents: http://kyc-verify-bank.xyz/upload",1,suspicious_domain|credential_request|suspicious_link
+36,Job offer congratulations,hr@company.com,"Congratulations! We are pleased to offer you the position. Please review the attached offer letter.",0,none
+37,Unusual activity on your account,security@dropbox-alert.xyz,"Your Dropbox was accessed from an unknown device. Verify now: http://dropbox-secure.xyz/verify",1,spoofed_domain|urgency|suspicious_link
+38,Newsletter subscription confirmed,newsletter@legitimateblog.com,"Thanks for subscribing to our newsletter! Expect monthly updates on industry news.",0,none
+39,Your domain is expiring,domains@godaddy-renew.xyz,"URGENT: Your domain expires in 3 days! Renew now to avoid losing it: http://domain-renew-now.xyz/pay",1,urgency|spoofed_domain|payment_request
+40,Conference registration,events@techconference.org,"Your registration for TechConf 2024 is confirmed. See you there!",0,none
+41,Password expiry notification,itsupport@company-helpdesk.net,"Your corporate password expires today. Update via: http://corp-pwd-reset.xyz/update",1,urgency|suspicious_link|credential_request
+42,Feedback request,customer-service@amazon.com,"How was your recent purchase? Leave a review and help other customers.",0,none
+43,You've been selected for survey,$500-survey@marketing-rewards.xyz,"Complete this 5-minute survey and earn $500! Claim: http://survey-cash.xyz/earn",1,prize_scam|suspicious_domain|suspicious_link
+44,Zoom meeting invitation,host@company.com,"You're invited to join our Zoom meeting at 2pm. Meeting ID: 123-456-789.",0,none
+45,Suspicious login attempt,security@microsoft.com,"We detected a sign-in attempt from an unfamiliar location. If this wasn't you, secure your account.",0,none
+46,Bank card suspended,fraud@hsbc-fraud-alert.net,"Your HSBC card is suspended due to suspicious use. Reactivate: http://hsbc-card-reactivate.xyz",1,spoofed_domain|urgency|suspicious_link
+47,New comment on your post,notifications@social-platform.com,"Someone commented on your recent post. Click to view.",0,none
+48,Delivery confirmation,tracking@ups.com,"Your package has been delivered. Track at ups.com/track.",0,none
+49,Claim $10,000 compensation,legal@class-action-lawsuit.xyz,"You may be entitled to $10,000 in compensation. Submit claim: http://lawsuit-claim.xyz/file",1,financial_scam|suspicious_domain|suspicious_link
+50,Annual performance review,hr@company.com,"It's time for your annual review. Please complete the self-assessment form by Friday.",0,none
