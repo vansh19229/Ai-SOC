@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 async def _simulate_logs_loop() -> None:
     """Periodically inject simulated log entries and derive threats."""
     from api.log_simulator import generate_log_batch, generate_threat_from_logs
-    from api.routes import get_store
+    from api.routes import get_store, broadcast_log_to_ws
 
     while True:
         try:
@@ -41,6 +41,10 @@ async def _simulate_logs_loop() -> None:
             # Keep log list bounded
             if len(s["logs"]) > 2000:
                 s["logs"] = s["logs"][:2000]
+
+            # Broadcast each new log to WebSocket clients
+            for log in batch:
+                await broadcast_log_to_ws(log)
 
             # Maybe derive a new threat
             threat = generate_threat_from_logs(batch)
