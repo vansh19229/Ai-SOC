@@ -1,16 +1,18 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Shield, LayoutDashboard, AlertTriangle, Activity, Users, Brain, FileText, Settings } from 'lucide-react';
+import { Shield, LayoutDashboard, AlertTriangle, Activity, Users, Brain, FileText, Settings, Map, Terminal } from 'lucide-react';
 
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/' },
   { label: 'Threats', icon: Shield, href: '/threats' },
   { label: 'Incidents', icon: AlertTriangle, href: '/incidents' },
   { label: 'Network', icon: Activity, href: '/network' },
+  { label: 'Attack Map', icon: Map, href: '/attack-map' },
   { label: 'User Behavior', icon: Users, href: '/behavior' },
-  { label: 'Intelligence', icon: Brain, href: '/intelligence' },
+  { label: 'Intelligence', icon: Brain, href: '/threat-intel' },
   { label: 'Logs', icon: FileText, href: '/logs' },
+  { label: 'Live Logs', icon: Terminal, href: '/realtime-logs' },
   { label: 'Admin', icon: Settings, href: '/admin' },
 ];
 

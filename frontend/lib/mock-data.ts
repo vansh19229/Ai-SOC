@@ -187,3 +187,36 @@ export const mockAttackSources = [
   { ip: '34.56.78.90', count: 24, country: 'US' },
   { ip: '172.16.254.1', count: 18, country: 'IN' },
 ];
+
+export const mockAttackMapData = {
+  attacks: [
+    { id: '1', source_ip: '185.234.219.42', source_lat: 55.76, source_lon: 37.62, source_country: 'Russia', target_lat: 40.71, target_lon: -74.01, severity: 'critical', type: 'sql_injection', timestamp: new Date(Date.now() - 300000).toISOString(), description: 'SQL injection attempt on login endpoint', status: 'active' },
+    { id: '2', source_ip: '103.42.91.17', source_lat: 39.90, source_lon: 116.41, source_country: 'China', target_lat: 40.71, target_lon: -74.01, severity: 'high', type: 'brute_force', timestamp: new Date(Date.now() - 600000).toISOString(), description: 'SSH brute force attack', status: 'investigating' },
+    { id: '3', source_ip: '198.51.100.10', source_lat: 39.04, source_lon: 125.76, source_country: 'North Korea', target_lat: 40.71, target_lon: -74.01, severity: 'critical', type: 'ddos', timestamp: new Date(Date.now() - 900000).toISOString(), description: 'DDoS from botnet', status: 'active' },
+    { id: '4', source_ip: '77.88.44.12', source_lat: -15.78, source_lon: -47.93, source_country: 'Brazil', target_lat: 40.71, target_lon: -74.01, severity: 'medium', type: 'port_scan', timestamp: new Date(Date.now() - 1200000).toISOString(), description: 'Port scanning activity', status: 'resolved' },
+    { id: '5', source_ip: '203.0.113.5', source_lat: 6.52, source_lon: 3.38, source_country: 'Nigeria', target_lat: 40.71, target_lon: -74.01, severity: 'high', type: 'phishing', timestamp: new Date(Date.now() - 1500000).toISOString(), description: 'Phishing campaign', status: 'resolved' },
+    { id: '6', source_ip: '45.67.89.10', source_lat: 44.43, source_lon: 26.10, source_country: 'Romania', target_lat: 40.71, target_lon: -74.01, severity: 'high', type: 'malware', timestamp: new Date(Date.now() - 2400000).toISOString(), description: 'Malware distribution', status: 'investigating' },
+    { id: '7', source_ip: '91.108.4.33', source_lat: 55.76, source_lon: 37.62, source_country: 'Russia', target_lat: 40.71, target_lon: -74.01, severity: 'high', type: 'xss', timestamp: new Date(Date.now() - 3000000).toISOString(), description: 'XSS attack attempt', status: 'false_positive' },
+    { id: '8', source_ip: '172.16.254.1', source_lat: 28.61, source_lon: 77.21, source_country: 'India', target_lat: 40.71, target_lon: -74.01, severity: 'low', type: 'port_scan', timestamp: new Date(Date.now() - 3600000).toISOString(), description: 'Reconnaissance scan', status: 'resolved' },
+  ],
+  total: 8,
+};
+
+export const mockThreatIntelStats = {
+  total: 115,
+  high_confidence: 72,
+  active_sources: 7,
+  by_type: { ip: 46, domain: 34, hash: 23, url: 12 },
+  by_source: { 'AlienVault OTX': 28, 'VirusTotal': 24, 'Shodan': 20, 'MISP': 18, 'ThreatFox': 15, 'Internal': 10 },
+};
+
+export const mockThreatIntel = [
+  { id: 'ti-1', type: 'ip', value: '185.234.219.42', threat_type: 'sql_injection', confidence: 95, source: 'AlienVault OTX', first_seen: '2024-01-15T00:00:00Z', last_seen: new Date(Date.now() - 86400000).toISOString(), tags: ['SQL Injection', 'Scanner'], description: 'Known SQL injection scanner.' },
+  { id: 'ti-2', type: 'ip', value: '103.42.91.17', threat_type: 'brute_force', confidence: 92, source: 'Shodan', first_seen: '2024-01-14T00:00:00Z', last_seen: new Date(Date.now() - 172800000).toISOString(), tags: ['Brute Force', 'SSH'], description: 'SSH brute-force botnet node.' },
+  { id: 'ti-3', type: 'domain', value: 'paypa1-security.com', threat_type: 'phishing', confidence: 98, source: 'VirusTotal', first_seen: '2024-01-13T00:00:00Z', last_seen: new Date(Date.now() - 259200000).toISOString(), tags: ['Phishing', 'Spoofing'], description: 'PayPal phishing domain.' },
+  { id: 'ti-4', type: 'hash', value: 'a1b2c3d4e5f67890abcdef1234567890', threat_type: 'ransomware', confidence: 99, source: 'ThreatFox', first_seen: '2024-01-12T00:00:00Z', last_seen: new Date(Date.now() - 345600000).toISOString(), tags: ['LockBit', 'Ransomware'], description: 'LockBit 3.0 ransomware sample.' },
+  { id: 'ti-5', type: 'ip', value: '91.108.4.33', threat_type: 'xss', confidence: 72, source: 'MISP', first_seen: '2024-01-11T00:00:00Z', last_seen: new Date(Date.now() - 432000000).toISOString(), tags: ['XSS', 'Web Attack'], description: 'XSS attack source.' },
+  { id: 'ti-6', type: 'url', value: 'http://34.56.78.90/exfil', threat_type: 'data_exfiltration', confidence: 94, source: 'Internal', first_seen: '2024-01-10T00:00:00Z', last_seen: new Date(Date.now() - 518400000).toISOString(), tags: ['Exfiltration', 'APT'], description: 'C2 exfiltration endpoint.' },
+  { id: 'ti-7', type: 'ip', value: '198.51.100.10', threat_type: 'ddos', confidence: 88, source: 'AlienVault OTX', first_seen: '2024-01-09T00:00:00Z', last_seen: new Date(Date.now() - 604800000).toISOString(), tags: ['DDoS', 'Botnet'], description: 'Mirai botnet node.' },
+  { id: 'ti-8', type: 'domain', value: 'update-flash-player.com', threat_type: 'malware', confidence: 97, source: 'VirusTotal', first_seen: '2024-01-08T00:00:00Z', last_seen: new Date(Date.now() - 691200000).toISOString(), tags: ['Drive-by Download', 'Trojan'], description: 'Fake Flash Player update page.' },
+];

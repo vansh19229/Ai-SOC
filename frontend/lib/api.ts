@@ -9,6 +9,9 @@ import {
   mockNetworkChartData,
   mockThreatDistribution,
   mockAttackSources,
+  mockAttackMapData,
+  mockThreatIntel,
+  mockThreatIntelStats,
 } from './mock-data';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -193,6 +196,9 @@ export async function getAdminSettings() {
       max_alerts_per_hour: 100,
       alert_email: 'soc@company.com',
       retention_days: 90,
+      email_alerts_enabled: false,
+      email_recipients: '',
+      telegram_alerts_enabled: false,
     };
   }
 }
@@ -200,6 +206,16 @@ export async function getAdminSettings() {
 export async function updateAdminSettings(data: Record<string, unknown>) {
   try { return await fetchAPI('/api/admin/settings', { method: 'PUT', body: JSON.stringify(data) }); }
   catch { return { success: true, ...data }; }
+}
+
+export async function testEmail() {
+  try { return await fetchAPI('/api/admin/test-email', { method: 'POST' }); }
+  catch { return { success: false, message: 'Email test failed – check email configuration' }; }
+}
+
+export async function testTelegram() {
+  try { return await fetchAPI('/api/admin/test-telegram', { method: 'POST' }); }
+  catch { return { success: false, message: 'Telegram test failed – check bot token and chat ID' }; }
 }
 
 export async function aiAnalyze(data: { log_data?: string; logs?: string; text?: string }) {
@@ -247,6 +263,82 @@ export async function aiChat(data: { message: string; context?: string }) {
         : `I've analyzed your query: "${data.message}". Based on current threat intelligence, the security posture is moderate. There are ${mockStats.active_alerts} active alerts requiring attention. The most critical issue is the ongoing ransomware incident on workstation-07. Would you like me to provide more details on any specific threat?`,
     };
   }
+}
+
+export async function explainThreat(data: { threat_id?: string; threat_data?: Record<string, unknown> }) {
+  try {
+    return await fetchAPI<{
+      threat_type: string;
+      explanation: string;
+      technical_details: string;
+      impact: string;
+      mitigation: string;
+      ioc_indicators: string[];
+      severity_justification: string;
+      similar_threats: string[];
+    }>('/api/ai/explain', { method: 'POST', body: JSON.stringify(data) });
+  } catch {
+    return {
+      threat_type: 'unknown',
+      explanation: 'A security threat was detected that requires investigation. The threat involves potentially malicious activity targeting your infrastructure.',
+      technical_details: 'The threat was identified through correlation of multiple security indicators including network traffic anomalies, log patterns, and behavioral signatures.',
+      impact: 'Without remediation, this threat could lead to unauthorized access, data loss, or service disruption.',
+      mitigation: '1. Isolate affected systems. 2. Collect forensic evidence. 3. Block source IPs at the perimeter. 4. Reset compromised credentials. 5. Follow your incident response playbook.',
+      ioc_indicators: ['Source IP involved in suspicious activity', 'Anomalous network traffic patterns', 'Unusual system behavior'],
+      severity_justification: 'Severity assigned based on potential impact, confidence score, and historical patterns.',
+      similar_threats: ['Advanced Persistent Threat', 'Zero-day Exploit', 'Supply Chain Attack'],
+    };
+  }
+}
+
+export async function getAttackMapData() {
+  try {
+    return await fetchAPI<typeof mockAttackMapData>('/api/attack-map');
+  } catch {
+    return mockAttackMapData;
+  }
+}
+
+export async function getThreatIntel(params?: {
+  page?: number;
+  limit?: number;
+  ioc_type?: string;
+  min_confidence?: number;
+  source?: string;
+  search?: string;
+}) {
+  try {
+    const q = new URLSearchParams({
+      page: String(params?.page || 1),
+      limit: String(params?.limit || 20),
+      ...(params?.ioc_type ? { ioc_type: params.ioc_type } : {}),
+      ...(params?.min_confidence !== undefined ? { min_confidence: String(params.min_confidence) } : {}),
+      ...(params?.source ? { source: params.source } : {}),
+      ...(params?.search ? { search: params.search } : {}),
+    });
+    return await fetchAPI<{ data: typeof mockThreatIntel; total: number; page: number; limit: number; pages: number }>(`/api/threat-intel?${q}`);
+  } catch {
+    return { data: mockThreatIntel, total: mockThreatIntel.length, page: 1, limit: 20, pages: 1 };
+  }
+}
+
+export async function checkIndicator(indicator: string) {
+  try {
+    return await fetchAPI<{ found: boolean; indicator: (typeof mockThreatIntel)[0] | null; value?: string }>(`/api/threat-intel/${encodeURIComponent(indicator)}`);
+  } catch {
+    const found = mockThreatIntel.find(i => i.value === indicator);
+    return { found: !!found, indicator: found || null };
+  }
+}
+
+export async function addIndicator(data: Partial<(typeof mockThreatIntel)[0]>) {
+  try { return await fetchAPI('/api/threat-intel', { method: 'POST', body: JSON.stringify(data) }); }
+  catch { return { ...data, id: String(Date.now()) }; }
+}
+
+export async function getThreatIntelStats() {
+  try { return await fetchAPI<typeof mockThreatIntelStats>('/api/threat-intel/stats'); }
+  catch { return mockThreatIntelStats; }
 }
 
 export { mockNetworkChartData, mockThreatDistribution, mockAttackSources };

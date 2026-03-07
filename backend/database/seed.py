@@ -284,7 +284,128 @@ def generate_settings() -> Dict[str, Any]:
         "blacklist_ips": ["185.220.101.45", "91.108.4.200"],
         "alert_email": "",
         "telegram_enabled": False,
+        "email_alerts_enabled": False,
+        "email_recipients": "",
+        "telegram_alerts_enabled": False,
     }
+
+
+def generate_threat_intel(n: int = 100) -> List[Dict[str, Any]]:
+    """Generate a seed list of threat intelligence IOC entries."""
+    indicators: List[Dict[str, Any]] = []
+    now = datetime.utcnow()
+
+    # Well-known malicious indicators (seeded deterministically)
+    known = [
+        {"type": "ip", "value": "185.234.219.42", "threat_type": "sql_injection",
+         "confidence": 95, "source": "AlienVault OTX", "tags": ["SQL Injection", "Scanner"],
+         "description": "Known SQL injection scanner, seen attacking web applications globally."},
+        {"type": "ip", "value": "103.42.91.17", "threat_type": "brute_force",
+         "confidence": 92, "source": "Shodan", "tags": ["Brute Force", "SSH"],
+         "description": "SSH brute-force botnet node – 847+ attempts recorded."},
+        {"type": "domain", "value": "paypa1-security.com", "threat_type": "phishing",
+         "confidence": 98, "source": "VirusTotal", "tags": ["Phishing", "Spoofing"],
+         "description": "PayPal phishing domain used in credential-harvesting campaigns."},
+        {"type": "hash", "value": "a1b2c3d4e5f67890abcdef1234567890", "threat_type": "ransomware",
+         "confidence": 99, "source": "ThreatFox", "tags": ["LockBit", "Ransomware"],
+         "description": "LockBit 3.0 ransomware sample – encrypts files and demands Bitcoin ransom."},
+        {"type": "ip", "value": "91.108.4.33", "threat_type": "xss",
+         "confidence": 72, "source": "MISP", "tags": ["XSS", "Web Attack"],
+         "description": "Source of cross-site scripting attacks targeting CMS platforms."},
+        {"type": "url", "value": "http://34.56.78.90/exfil", "threat_type": "data_exfiltration",
+         "confidence": 94, "source": "Internal", "tags": ["Exfiltration", "APT"],
+         "description": "C2 exfiltration endpoint used by APT actor to receive stolen data."},
+        {"type": "ip", "value": "198.51.100.10", "threat_type": "ddos",
+         "confidence": 88, "source": "AlienVault OTX", "tags": ["DDoS", "Botnet"],
+         "description": "Mirai botnet node participating in volumetric DDoS campaigns."},
+        {"type": "ip", "value": "77.88.44.12", "threat_type": "port_scan",
+         "confidence": 79, "source": "Shodan", "tags": ["Port Scan", "Reconnaissance"],
+         "description": "Systematic port scanner targeting enterprise networks."},
+        {"type": "domain", "value": "update-flash-player.com", "threat_type": "malware",
+         "confidence": 97, "source": "VirusTotal", "tags": ["Drive-by Download", "Trojan"],
+         "description": "Fake Flash Player update page distributing Trojan droppers."},
+        {"type": "hash", "value": "deadbeef12345678cafebabe90abcdef", "threat_type": "malware",
+         "confidence": 91, "source": "ThreatFox", "tags": ["Emotet", "Banking Trojan"],
+         "description": "Emotet loader sample – establishes persistence and downloads payloads."},
+        {"type": "ip", "value": "203.0.113.5", "threat_type": "phishing",
+         "confidence": 85, "source": "MISP", "tags": ["Phishing", "Email"],
+         "description": "Mail server used to send phishing emails impersonating HR departments."},
+        {"type": "url", "value": "https://evil-c2.ru/beacon", "threat_type": "apt",
+         "confidence": 96, "source": "Internal", "tags": ["APT", "C2", "Cobalt Strike"],
+         "description": "Cobalt Strike beacon URL used in targeted APT intrusion."},
+        {"type": "domain", "value": "secure-bank-login.xyz", "threat_type": "phishing",
+         "confidence": 99, "source": "VirusTotal", "tags": ["Banking", "Phishing"],
+         "description": "Banking credential phishing site targeting EU financial institutions."},
+        {"type": "ip", "value": "45.33.32.156", "threat_type": "scanner",
+         "confidence": 68, "source": "Shodan", "tags": ["Scanner", "Vulnerability"],
+         "description": "Known Shodan scanner node – conducting internet-wide scans."},
+        {"type": "hash", "value": "f00dface87654321fedcba9876543210", "threat_type": "ransomware",
+         "confidence": 97, "source": "ThreatFox", "tags": ["BlackCat", "Ransomware"],
+         "description": "BlackCat/ALPHV ransomware payload targeting enterprise systems."},
+    ]
+
+    ioc_types = ["ip", "domain", "hash", "url"]
+    type_weights = [0.40, 0.30, 0.20, 0.10]
+    threat_types = ["malware", "phishing", "brute_force", "ddos", "ransomware", "apt", "scanner", "data_exfiltration"]
+    sources = ["AlienVault OTX", "VirusTotal", "Shodan", "MISP", "ThreatFox", "Internal", "Recorded Future"]
+    tag_pool = [
+        ["Scanner"], ["Brute Force"], ["Phishing"], ["Malware"], ["Ransomware"],
+        ["APT", "C2"], ["DDoS", "Botnet"], ["SQL Injection"], ["Exploit"],
+        ["Trojan"], ["Banking", "Trojan"], ["Keylogger"], ["Backdoor"],
+    ]
+
+    for k in known:
+        days_since = random.randint(5, 120)
+        indicators.append({
+            "id": _new_id(),
+            "type": k["type"],
+            "value": k["value"],
+            "threat_type": k["threat_type"],
+            "confidence": k["confidence"],
+            "source": k["source"],
+            "first_seen": (now - timedelta(days=days_since + 10)).isoformat(),
+            "last_seen": (now - timedelta(days=random.randint(0, days_since))).isoformat(),
+            "tags": k["tags"],
+            "description": k["description"],
+        })
+
+    # Random additional entries
+    _random_ips = [_rand_ip(True) for _ in range(30)]
+    _random_domains = [
+        f"malicious-{random.randint(1000,9999)}.{random.choice(['com','net','ru','cn','xyz'])}"
+        for _ in range(20)
+    ]
+    _random_hashes = [
+        "".join(random.choices("0123456789abcdef", k=32))
+        for _ in range(15)
+    ]
+    _random_urls = [
+        f"http://{random.choice(_random_ips)}/{random.choice(['payload','shell','cmd','c2','beacon'])}"
+        for _ in range(10)
+    ]
+
+    value_pools = {"ip": _random_ips, "domain": _random_domains, "hash": _random_hashes, "url": _random_urls}
+
+    for _ in range(n - len(known)):
+        itype = random.choices(ioc_types, weights=type_weights)[0]
+        values = value_pools[itype]
+        if not values:
+            continue
+        days_since = random.randint(1, 180)
+        indicators.append({
+            "id": _new_id(),
+            "type": itype,
+            "value": random.choice(values),
+            "threat_type": random.choice(threat_types),
+            "confidence": random.randint(50, 99),
+            "source": random.choice(sources),
+            "first_seen": (now - timedelta(days=days_since + 5)).isoformat(),
+            "last_seen": (now - timedelta(days=random.randint(0, days_since))).isoformat(),
+            "tags": random.choice(tag_pool),
+            "description": "",
+        })
+
+    return indicators
 
 
 def build_seed() -> Dict[str, Any]:
@@ -296,6 +417,7 @@ def build_seed() -> Dict[str, Any]:
     network = generate_network_activity(100)
     users = generate_users()
     settings = generate_settings()
+    threat_intel = generate_threat_intel(100)
     return {
         "threats": threats,
         "alerts": alerts,
@@ -306,4 +428,5 @@ def build_seed() -> Dict[str, Any]:
         "settings": settings,
         "whitelist": settings["whitelist_ips"][:],
         "blacklist": settings["blacklist_ips"][:],
+        "threat_intel": threat_intel,
     }
